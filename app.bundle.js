@@ -30054,8 +30054,24 @@ void main(){
   container.appendChild(renderer.domElement);
   var scene = new Scene;
   scene.background = new Color(198932);
-  var camera = new PerspectiveCamera(mobile ? 76 : 43, innerWidth / innerHeight, 0.01, 500);
-  camera.position.set(0, 2.2, 23);
+  function portraitLayout() {
+    return innerWidth <= 700 && innerHeight > innerWidth;
+  }
+  function widePosition() {
+    return portraitLayout() ? new Vector3(0, 1.4, 14.5) : new Vector3(0, 2.2, 23);
+  }
+  var camera = new PerspectiveCamera(portraitLayout() ? 66 : 43, innerWidth / innerHeight, 0.01, 500);
+  camera.position.copy(widePosition());
+  function updateProjection() {
+    camera.aspect = innerWidth / innerHeight;
+    camera.fov = portraitLayout() ? 66 : 43;
+    if (portraitLayout())
+      camera.setViewOffset(innerWidth, innerHeight, 0, innerHeight * 0.07, innerWidth, innerHeight);
+    else
+      camera.clearViewOffset();
+    camera.updateProjectionMatrix();
+  }
+  updateProjection();
   var composer = new EffectComposer(renderer);
   composer.setPixelRatio(pixelRatio);
   composer.setSize(innerWidth, innerHeight);
@@ -30111,7 +30127,7 @@ void main(){
   controls.addEventListener("start", () => {
     flight = null;
   });
-  $("#view-wide").addEventListener("click", () => fly(new Vector3(0, 2.2, 23), new Vector3(0, 0, 0), "view-wide"));
+  $("#view-wide").addEventListener("click", () => fly(widePosition(), new Vector3(0, 0, 0), "view-wide"));
   $("#view-inside").addEventListener("click", () => fly(new Vector3(0, 0.35, 2.2), new Vector3(0, 0, 0), "view-inside"));
   $("#view-ship").addEventListener("click", () => {
     const p = ship.group.position.clone();
@@ -30161,8 +30177,7 @@ void main(){
   renderer.domElement.addEventListener("pointerup", endDrag);
   renderer.domElement.addEventListener("pointercancel", endDrag);
   window.addEventListener("resize", () => {
-    camera.aspect = innerWidth / innerHeight;
-    camera.updateProjectionMatrix();
+    updateProjection();
     renderer.setSize(innerWidth, innerHeight);
     renderer.setPixelRatio(pixelRatio);
     composer.setPixelRatio(pixelRatio);

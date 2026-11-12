@@ -22,7 +22,9 @@
       <p class="description">穿越光与引力的边界，探索黑洞与永恒号。</p>
       <div class="coordinate">深空坐标 <span>—</span> 0 0 0 : 0 0 1</div>
     </section>
-    <aside class="controls" aria-label="场景控制">
+    <button class="mobile-controls-toggle" id="mobile-controls-toggle" type="button" aria-controls="scene-controls" aria-expanded="false"><span>场景控制</span><span class="toggle-hint">视角 · 母舰</span><span class="toggle-icon" aria-hidden="true">⌃</span></button>
+    <div class="mobile-gesture-hint" aria-hidden="true">单指旋转 · 双指缩放</div>
+    <aside class="controls" id="scene-controls" aria-label="场景控制">
       <div class="panel-head"><div><span class="panel-kicker">场景控制</span><h2>探索视角</h2></div><span class="orbit-icon" aria-hidden="true">✧</span></div>
       <div class="view-buttons" role="group" aria-label="选择视角">
         <button id="view-wide" class="view-button active"><span>◉</span> 黑洞全景</button>
@@ -39,6 +41,23 @@
       <div class="distance-label">视距 <strong id="distance">—</strong></div>
     </footer>
   </main>
+  <script>
+    (() => {
+      const toggle = document.getElementById('mobile-controls-toggle');
+      const panel = document.getElementById('scene-controls');
+      const setOpen = open => {
+        panel.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.querySelector('.toggle-icon').textContent = open ? '⌄' : '⌃';
+        toggle.querySelector('.toggle-hint').textContent = open ? '收起' : '视角 · 母舰';
+      };
+      toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+      panel.querySelectorAll('.view-button').forEach(button => button.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 700px)').matches) setOpen(false);
+      }));
+      window.addEventListener('keydown', event => { if (event.key === 'Escape') setOpen(false); });
+    })();
+  </script>
   <script defer src="./app.bundle.js"></script>
 </body>
 </html>
