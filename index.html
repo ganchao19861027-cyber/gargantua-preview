@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050b16">
+  <title>卡冈图雅 | 深空观测</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="experience">
+    <div id="scene" aria-label="卡冈图雅和永恒号的交互式三维场景"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i></span><span>深空观测 <small>INTERSTELLAR</small></span></div>
+      <div class="top-right"><span class="live-dot"></span> 实时模拟 <span class="divider"></span> GARGANTUA / ENDURANCE</div>
+    </header>
+    <section class="intro" aria-labelledby="title">
+      <div class="eyebrow"><span></span> 星际穿越 · 交互场景</div>
+      <h1 id="title">卡冈图雅</h1>
+      <p class="english-title">GARGANTUA</p>
+      <p class="description">穿越光与引力的边界，探索黑洞与永恒号。</p>
+      <div class="coordinate">深空坐标 <span>—</span> 0 0 0 : 0 0 1</div>
+    </section>
+    <aside class="controls" aria-label="场景控制">
+      <div class="panel-head"><div><span class="panel-kicker">场景控制</span><h2>探索视角</h2></div><span class="orbit-icon" aria-hidden="true">✧</span></div>
+      <div class="view-buttons" role="group" aria-label="选择视角">
+        <button id="view-wide" class="view-button active"><span>◉</span> 黑洞全景</button>
+        <button id="view-inside" class="view-button"><span>◎</span> 靠近黑洞</button>
+        <button id="view-ship" class="view-button"><span>⌾</span> 聚焦母舰</button>
+      </div>
+      <div class="panel-rule"></div>
+      <div class="ship-title"><div><span class="panel-kicker">ENDURANCE</span><h2>永恒号母舰</h2></div><span id="status" class="status">已组装</span></div>
+      <p class="panel-copy">拆解舱段，观察环形结构。</p>
+      <div class="assembly-buttons"><button id="explode" class="primary-button">散开部件 <span>↗</span></button><button id="assemble" class="secondary-button">重新组装</button></div>
+    </aside>
+    <footer class="bottom-bar">
+      <div class="instructions"><span><b>滚轮</b> 缩放视角</span><span><b>左键拖动</b> 旋转视角</span><span><b>中键拖动</b> 平移视角</span><span><b>拖动母舰</b> 移动位置</span></div>
+      <div class="distance-label">视距 <strong id="distance">—</strong></div>
+    </footer>
+  </main>
+  <script defer src="./app.bundle.js"></script>
+</body>
+</html>
